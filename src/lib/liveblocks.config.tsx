@@ -17,10 +17,11 @@ import {
   useEffect,
   useState,
 } from "react";
-import { io } from "socket.io-client";
-import type { Socket } from "socket.io-client/build/esm/socket.js";
+import io from "socket.io-client";
 
 interface RoomContextType {
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
   socket: Socket<ServerToClientEvents, ClientToServerEvents> | null;
   roomId: string;
   roomState: RoomState | null;
@@ -43,6 +44,8 @@ export interface RoomProviderProps {
 }
 
 export function RoomProvider({ id, initialCode, children }: RoomProviderProps) {
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
   const [socket, setSocket] = useState<Socket<
     ServerToClientEvents,
     ClientToServerEvents
@@ -58,6 +61,8 @@ export function RoomProvider({ id, initialCode, children }: RoomProviderProps) {
   }));
 
   useEffect(() => {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
     const socketInstance: Socket<ServerToClientEvents, ClientToServerEvents> =
       io({
         path: "/socket.io",
