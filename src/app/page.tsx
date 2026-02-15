@@ -42,22 +42,22 @@ export default function Home() {
       <div className="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] bg-purple-600/20 rounded-full blur-[120px] pointer-events-none" />
       <div className="absolute bottom-[-10%] right-[-10%] w-[500px] h-[500px] bg-blue-600/20 rounded-full blur-[120px] pointer-events-none" />
 
-      <div className="z-10 max-w-2xl w-full text-center space-y-8">
+      <div className="z-10 space-y-8 w-full max-w-2xl text-center">
         <div className="space-y-4">
-          <h1 className="text-5xl md:text-7xl font-bold tracking-tight bg-gradient-to-r from-white via-purple-100 to-purple-200 bg-clip-text text-transparent">
+          <h1 className="text-5xl font-bold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-white via-purple-100 to-purple-200 md:text-7xl">
             CodeCollab
           </h1>
-          <p className="text-gray-400 text-lg md:text-xl max-w-lg mx-auto leading-relaxed">
+          <p className="mx-auto max-w-lg text-lg leading-relaxed text-gray-400 md:text-xl">
             Real-time collaborative code review. Share snippets, debug together,
             and ship faster.
           </p>
         </div>
 
-        <div className="bg-white/5 backdrop-blur-xl border border-white/10 p-8 rounded-2xl shadow-2xl space-y-6">
+        <div className="p-8 space-y-6 rounded-2xl border shadow-2xl backdrop-blur-xl bg-white/5 border-white/10">
           <div className="space-y-2 text-left">
             <label
               htmlFor="username"
-              className="text-sm font-medium text-gray-300 ml-1"
+              className="ml-1 text-sm font-medium text-gray-300"
             >
               Enter your name to join
             </label>
@@ -67,7 +67,7 @@ export default function Home() {
               placeholder="e.g. Soyeb"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              className="w-full bg-black/20 border border-white/10 rounded-xl px-4 py-3 text-white placeholder:text-gray-600 focus:outline-none focus:ring-2 focus:ring-purple-500/50 transition-all font-medium"
+              className="px-4 py-3 w-full font-medium text-white rounded-xl border transition-all bg-black/20 border-white/10 placeholder:text-gray-600 focus:outline-none focus:ring-2 focus:ring-purple-500/50"
               onKeyDown={(e) => e.key === "Enter" && startSession()}
             />
           </div>
@@ -78,8 +78,8 @@ export default function Home() {
             className="w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 text-white font-bold py-4 rounded-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-purple-500/20 active:scale-[0.98]"
           >
             {loading ? (
-              <span className="flex items-center justify-center gap-2">
-                <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
+              <span className="flex gap-2 justify-center items-center">
+                <svg className="w-5 h-5 animate-spin" viewBox="0 0 24 24">
                   <circle
                     className="opacity-25"
                     cx="12"
@@ -103,7 +103,7 @@ export default function Home() {
           </button>
         </div>
 
-        <p className="text-gray-500 text-sm">
+        <p className="text-sm text-gray-500">
           No sign-up required. Just enter a name and start sharing.
         </p>
       </div>

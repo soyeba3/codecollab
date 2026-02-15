@@ -31,7 +31,7 @@ export type Annotation = {
   id: string;
   line: number;
   text: string;
-  userId: number;
+  userId: string;
   userInfo: UserMeta["info"];
   createdAt: number;
   [key: string]: Json;
@@ -40,7 +40,7 @@ export type Annotation = {
 export type ChatMessage = {
   id: string;
   text: string;
-  userId: number;
+  userId: string;
   timestamp: number;
   userInfo: UserMeta["info"];
   [key: string]: Json;

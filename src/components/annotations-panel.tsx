@@ -14,7 +14,7 @@ export function AnnotationsPanel() {
 
   const addAnnotation = useMutation(
     ({ storage }, { line, text }: { line: number; text: string }) => {
-      storage.get("annotations").push({
+      (storage.get("annotations") as { push: (val: unknown) => void }).push({
         id: Date.now().toString(),
         line,
         text,
@@ -33,7 +33,9 @@ export function AnnotationsPanel() {
   );
 
   const removeAnnotation = useMutation(({ storage }, index: number) => {
-    storage.get("annotations").delete(index);
+    (storage.get("annotations") as { delete: (idx: number) => void }).delete(
+      index,
+    );
   }, []);
 
   const handleAdd = () => {
@@ -53,12 +55,12 @@ export function AnnotationsPanel() {
       {!isAdding ? (
         <button
           onClick={() => setIsAdding(true)}
-          className="w-full py-2 px-4 rounded-lg border border-dashed border-white/20 text-gray-400 hover:text-white hover:border-white/40 transition-colors text-sm font-medium flex items-center justify-center gap-2"
+          className="flex gap-2 justify-center items-center px-4 py-2 w-full text-sm font-medium text-gray-400 rounded-lg border border-dashed transition-colors border-white/20 hover:text-white hover:border-white/40"
         >
           + Add Annotation
         </button>
       ) : (
-        <div className="bg-white/5 p-3 rounded-lg space-y-3 border border-purple-500/30">
+        <div className="p-3 space-y-3 rounded-lg border bg-white/5 border-purple-500/30">
           <input
             type="number"
             placeholder="Line number"
@@ -93,21 +95,21 @@ export function AnnotationsPanel() {
         {annotations.map((ann: Annotation, index: number) => (
           <div
             key={ann.id}
-            className="bg-white/5 border border-white/5 rounded-lg p-3 hover:border-white/10 transition-colors group"
+            className="p-3 rounded-lg border transition-colors bg-white/5 border-white/5 hover:border-white/10 group"
           >
-            <div className="flex items-center justify-between mb-2">
-              <div className="flex items-center gap-2">
+            <div className="flex justify-between items-center mb-2">
+              <div className="flex gap-2 items-center">
                 <span className="bg-purple-500/20 text-purple-300 text-[10px] font-mono px-1.5 py-0.5 rounded border border-purple-500/30">
                   L{ann.line}
                 </span>
-                <span className="text-xs text-gray-400 font-medium">
+                <span className="text-xs font-medium text-gray-400">
                   {ann.userInfo?.name}
                 </span>
               </div>
               {ann.userId === user?.connectionId && (
                 <button
                   onClick={() => removeAnnotation(index)}
-                  className="text-gray-600 hover:text-red-400 opacity-0 group-hover:opacity-100 transition-all"
+                  className="text-gray-600 opacity-0 transition-all hover:text-red-400 group-hover:opacity-100"
                 >
                   <svg
                     className="w-3 h-3"
@@ -125,7 +127,7 @@ export function AnnotationsPanel() {
                 </button>
               )}
             </div>
-            <p className="text-sm text-gray-200 leading-relaxed">{ann.text}</p>
+            <p className="text-sm leading-relaxed text-gray-200">{ann.text}</p>
             <div className="mt-2 text-[10px] text-gray-600 text-right">
               {new Date(ann.createdAt).toLocaleTimeString()}
             </div>

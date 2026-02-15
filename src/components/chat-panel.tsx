@@ -15,7 +15,7 @@ export function ChatPanel() {
     ({ storage }, text: string) => {
       if (!text.trim()) return;
 
-      storage.get("chatMessages").push({
+      (storage.get("chatMessages") as { push: (val: unknown) => void }).push({
         id: Date.now().toString(),
         text,
         userId: user?.connectionId ?? 0,

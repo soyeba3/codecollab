@@ -17,7 +17,7 @@ export function CodeEditor() {
   // Storage
   const code = useStorage((root) => root.code);
   const updateCode = useMutation(({ storage }, newCode: string) => {
-    storage.set("code", newCode);
+    (storage.get("code") as { set: (val: string) => void }).set(newCode);
   }, []);
 
   // Presence
@@ -28,7 +28,7 @@ export function CodeEditor() {
 
   // Sync Code: Storage -> Editor
   useEffect(() => {
-    if (editor && code !== undefined && code !== editor.getValue()) {
+    if (editor && typeof code === "string" && code !== editor.getValue()) {
       isRemoteUpdate.current = true;
       const position = editor.getPosition();
       editor.setValue(code);
@@ -115,7 +115,7 @@ export function CodeEditor() {
     setEditor(editor);
 
     // Initial sync
-    if (code) {
+    if (typeof code === "string") {
       isRemoteUpdate.current = true;
       editor.setValue(code);
       isRemoteUpdate.current = false;

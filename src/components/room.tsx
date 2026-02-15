@@ -1,8 +1,6 @@
 "use client";
 
-import { RoomProvider } from "@/lib/liveblocks.config";
-import { LiveList } from "@liveblocks/client";
-import { ClientSideSuspense } from "@liveblocks/react";
+import { ClientSideSuspense, RoomProvider } from "@/lib/liveblocks.config";
 import { ReactNode } from "react";
 
 interface RoomProps {
@@ -18,11 +16,7 @@ export function Room({ children, roomId, initialCode = "" }: RoomProps) {
       initialPresence={{
         cursor: null,
       }}
-      initialStorage={{
-        code: initialCode,
-        annotations: new LiveList([]),
-        chatMessages: new LiveList([]),
-      }}
+      initialCode={initialCode}
     >
       <ClientSideSuspense fallback={<LoadingState />}>
         {() => children}
