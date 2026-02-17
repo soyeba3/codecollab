@@ -42,7 +42,7 @@ export const initializeSocket = (httpServer: HttpServer) => {
     SocketData
   >(httpServer, {
     cors: {
-      origin: "*", // Allow all origins for dev, restrict in prod
+      origin: process.env.ALLOWED_ORIGIN || "*",
       methods: ["GET", "POST"],
     },
   });

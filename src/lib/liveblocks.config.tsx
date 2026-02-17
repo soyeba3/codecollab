@@ -63,8 +63,10 @@ export function RoomProvider({ id, initialCode, children }: RoomProviderProps) {
   useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
+    const socketUrl = process.env.NEXT_PUBLIC_SOCKET_URL || "http://localhost:3000";
+    
     const socketInstance: Socket<ServerToClientEvents, ClientToServerEvents> =
-      io({
+      io(socketUrl, {
         path: "/socket.io",
       });
     // eslint-disable-next-line react-hooks/set-state-in-effect
