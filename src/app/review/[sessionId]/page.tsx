@@ -1,9 +1,9 @@
-import { Room } from "@/components/room";
 import { db } from "@/db";
 import { sessions } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import { notFound } from "next/navigation";
-import EditorPageClient from "./editor-page-client";
+import JoinRoomForm from "./join-room-form";
+import ReviewSessionClient from "./review-session-client";
 
 interface PageProps {
   params: Promise<{ sessionId: string }>;
@@ -17,7 +17,6 @@ export default async function ReviewSessionPage({
   const { sessionId } = await params;
   const { user } = await searchParams;
 
-  // Fetch session from DB to get initial code
   const session = await db.query.sessions.findFirst({
     where: eq(sessions.id, sessionId),
   });
@@ -26,9 +25,9 @@ export default async function ReviewSessionPage({
     notFound();
   }
 
-  return (
-    <Room roomId={sessionId} initialCode={session.code} userName={user}>
-      <EditorPageClient session={session} />
-    </Room>
-  );
+  if (!user) {
+    return <JoinRoomForm sessionId={sessionId} />;
+  }
+
+  return <ReviewSessionClient session={session} userName={user} />;
 }

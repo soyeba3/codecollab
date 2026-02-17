@@ -97,7 +97,11 @@ export function SessionHeader({ session }: { session: Session }) {
       <ShareModal
         isOpen={shareOpen}
         onClose={handleCloseShare}
-        shareUrl={typeof window !== "undefined" ? window.location.href : ""}
+        shareUrl={
+          typeof window !== "undefined"
+            ? window.location.origin + window.location.pathname
+            : ""
+        }
       />
     </>
   );
