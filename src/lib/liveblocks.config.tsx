@@ -38,17 +38,23 @@ export interface RoomProviderProps {
   initialPresence: { cursor: { line: number; column: number } | null };
   initialStorage?: unknown;
   initialCode?: string;
+  userName?: string;
   children: ReactNode;
 }
 
-export function RoomProvider({ id, initialCode, children }: RoomProviderProps) {
+export function RoomProvider({
+  id,
+  initialCode,
+  userName,
+  children,
+}: RoomProviderProps) {
   const [socket, setSocket] = useState<SocketInstance | null>(null);
   const [isConnected, setIsConnected] = useState(false);
   const [roomState, setRoomState] = useState<RoomState | null>(null);
   const [currentUser, setCurrentUser] = useState<User | null>(null);
 
   const [userInfo] = useState<UserInfo>(() => ({
-    name: "Anonymous",
+    name: userName || "Anonymous",
     color: "#" + Math.floor(Math.random() * 16777215).toString(16),
     picture: `https://api.dicebear.com/9.x/avataaars/svg?seed=${Math.random()}`,
   }));

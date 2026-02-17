@@ -13,6 +13,16 @@
   }
 }
 
+button,
+[role="button"],
+a,
+input[type="submit"],
+input[type="button"],
+select,
+summary {
+  cursor: pointer;
+}
+
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
@@ -24,5 +34,5 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  @apply rounded-full bg-gray-800 hover:bg-gray-700;
+  @apply bg-gray-800 rounded-full hover:bg-gray-700;
 }
