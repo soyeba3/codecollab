@@ -3,9 +3,7 @@
 import {
   Annotation,
   ChatMessage,
-  ClientToServerEvents,
   RoomState,
-  ServerToClientEvents,
   User,
   UserInfo,
 } from "@/server/types";
@@ -19,10 +17,10 @@ import {
 } from "react";
 import io from "socket.io-client";
 
+type SocketInstance = ReturnType<typeof io>;
+
 interface RoomContextType {
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
-  socket: Socket<ServerToClientEvents, ClientToServerEvents> | null;
+  socket: SocketInstance | null;
   roomId: string;
   roomState: RoomState | null;
   currentUser: User | null;
@@ -44,12 +42,7 @@ export interface RoomProviderProps {
 }
 
 export function RoomProvider({ id, initialCode, children }: RoomProviderProps) {
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
-  const [socket, setSocket] = useState<Socket<
-    ServerToClientEvents,
-    ClientToServerEvents
-  > | null>(null);
+  const [socket, setSocket] = useState<SocketInstance | null>(null);
   const [isConnected, setIsConnected] = useState(false);
   const [roomState, setRoomState] = useState<RoomState | null>(null);
   const [currentUser, setCurrentUser] = useState<User | null>(null);
@@ -61,14 +54,12 @@ export function RoomProvider({ id, initialCode, children }: RoomProviderProps) {
   }));
 
   useEffect(() => {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    const socketUrl = process.env.NEXT_PUBLIC_SOCKET_URL || "http://localhost:3000";
-    
-    const socketInstance: Socket<ServerToClientEvents, ClientToServerEvents> =
-      io(socketUrl, {
-        path: "/socket.io",
-      });
+    const socketUrl =
+      process.env.NEXT_PUBLIC_SOCKET_URL || "http://localhost:3000";
+
+    const socketInstance: SocketInstance = io(socketUrl, {
+      path: "/socket.io",
+    });
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setSocket(socketInstance);
 
