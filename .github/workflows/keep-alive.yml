@@ -2,7 +2,7 @@ name: Keep Render Awake
 
 on:
   schedule:
-    - cron: "*/5 * * * *"
+    - cron: "*/3 * * * *"
   workflow_dispatch:
 
 jobs:
@@ -10,4 +10,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Ping Render app
-        run: curl -L --silent --show-error --fail https://codecollab-0z8b.onrender.com/health
+        run: curl -L --silent --show-error --fail https://codecollab-soyeb.vercel.app
