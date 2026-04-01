@@ -12,6 +12,7 @@ const handle = app.getRequestHandler();
 app.prepare().then(() => {
   const server = createServer(async (req, res) => {
     if (req.method === "GET" && req.url === "/health") {
+      console.log("Health check");
       res.statusCode = 200;
       res.setHeader("Content-Type", "text/plain");
       res.end("OK");
